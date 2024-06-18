@@ -1,4 +1,5 @@
 from matrimony.db import DB
+import maskpass  # Importing the maskpass module
 
 class User:
     def __init__(self):
@@ -11,7 +12,7 @@ class User:
         if self.username_exists(username):
             print("⚠️ Username already exists. Please choose a different username.")
             return
-        password = input("Enter a password: ")
+        password = maskpass.askpass(prompt="Enter a password: ", mask="*")  # Using maskpass to hide password input with asterisks
         name = input("Enter your name: ").title()
         age = int(input("Enter your age: "))
         if age < 18:
@@ -32,7 +33,7 @@ class User:
         print("\n🔑➡️ User Login")
         print("-" * 30)
         username = input("Enter your username: ")
-        password = input("Enter your password: ")
+        password = maskpass.askpass(prompt="Enter your password: ", mask="*")  # Using maskpass to hide password input with asterisks
 
         self.db.cursor.execute('''SELECT * FROM users WHERE username=%s AND password=%s''', (username, password))
 
